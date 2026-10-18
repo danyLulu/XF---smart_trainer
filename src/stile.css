@@ -1,0 +1,648 @@
+/* ============================================================
+   XFIT Smart Trainer — стиль в духе сайта xfit.ru
+   Белый фон · чёрный текст · фирменный зелёный #36B647
+   ============================================================ */
+
+:root {
+    --xfit-black: #111111;
+    --xfit-green: #36B647;
+    --xfit-green-dark: #2a9a3a;
+    --xfit-green-light: #e8f7ea;
+    --xfit-white: #ffffff;
+    --xfit-bg: #f6f6f4;
+    --xfit-gray: #777978;
+    --xfit-gray-light: #afafaf;
+    --xfit-border: #e5e5e2;
+    --xfit-red: #e03131;
+    --shadow-card: 0 12px 32px rgba(17, 17, 17, .06);
+    --shadow-hover: 0 18px 44px rgba(17, 17, 17, .10);
+    --radius: 12px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    background: var(--xfit-white);
+    color: var(--xfit-black);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+}
+
+.container {
+    width: 100%;
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+/* ===== Верхняя полоса ===== */
+.topbar {
+    background: var(--xfit-green);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: .2px;
+}
+
+.topbar-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.topbar-item {
+    opacity: .95;
+}
+
+/* ===== Шапка ===== */
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(255, 255, 255, .92);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--xfit-border);
+}
+
+.header-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 72px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--xfit-black);
+}
+
+.logo-xfit {
+    font-family: 'Oswald', sans-serif;
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    line-height: 1;
+}
+
+.logo-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--xfit-green);
+}
+
+.logo-sub {
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--xfit-gray);
+    letter-spacing: 2.5px;
+}
+
+.nav {
+    display: flex;
+    gap: 34px;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: var(--xfit-black);
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .6px;
+    padding: 6px 0;
+    position: relative;
+    transition: color .2s;
+}
+
+.nav-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 3px;
+    background: var(--xfit-green);
+    transition: width .25s;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: var(--xfit-black);
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+    width: 100%;
+}
+
+/* ===== Hero-блок ===== */
+.hero {
+    background: linear-gradient(180deg, #fbfbfa 0%, var(--xfit-bg) 100%);
+    padding: 88px 0 96px;
+    border-bottom: 1px solid var(--xfit-border);
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::after {
+    content: "";
+    position: absolute;
+    top: -60px;
+    right: -60px;
+    width: 340px;
+    height: 340px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(54, 182, 71, .14), transparent 70%);
+    pointer-events: none;
+}
+
+.hero-tag {
+    display: inline-block;
+    font-size: 13px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--xfit-green);
+    background: var(--xfit-green-light);
+    padding: 7px 14px;
+    border-radius: 999px;
+    margin-bottom: 22px;
+}
+
+.hero-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: clamp(44px, 6vw, 72px);
+    font-weight: 700;
+    line-height: 1.04;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0 0 22px;
+}
+
+.hero-title span {
+    color: var(--xfit-green);
+}
+
+.hero-sub {
+    max-width: 620px;
+    font-size: 17px;
+    color: var(--xfit-gray);
+    margin: 0 0 26px;
+}
+
+.hero-features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 34px;
+    display: grid;
+    gap: 12px;
+    max-width: 560px;
+}
+
+.hero-features li {
+    position: relative;
+    padding-left: 34px;
+    font-size: 15.5px;
+    font-weight: 600;
+}
+
+.hero-features li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--xfit-green);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ===== Кнопки ===== */
+.btn {
+    display: inline-block;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all .2s ease;
+}
+
+.btn-primary {
+    background: var(--xfit-black);
+    color: #fff;
+    padding: 16px 42px;
+}
+
+.btn-primary:hover {
+    background: var(--xfit-green);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px rgba(54, 182, 71, .28);
+}
+
+/* ===== Секция тренировки ===== */
+.workout {
+    padding: 84px 0 96px;
+    background: var(--xfit-bg);
+}
+
+.section-head {
+    margin-bottom: 42px;
+}
+
+.section-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: 40px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0;
+    display: inline-block;
+    position: relative;
+}
+
+.section-title::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -8px;
+    width: 56px;
+    height: 5px;
+    background: var(--xfit-green);
+}
+
+.section-sub {
+    margin: 20px 0 0;
+    color: var(--xfit-gray);
+    font-size: 16px;
+    max-width: 560px;
+}
+
+.workout-grid {
+    display: grid;
+    grid-template-columns: 1.55fr 1fr;
+    gap: 32px;
+    align-items: start;
+}
+
+/* ===== Карточка камеры ===== */
+.camera-card {
+    background: var(--xfit-white);
+    border: 1px solid var(--xfit-border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
+    transition: box-shadow .25s;
+}
+
+.camera-card:hover {
+    box-shadow: var(--shadow-hover);
+}
+
+.camera-card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 20px;
+    font-size: 13px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 1px solid var(--xfit-border);
+}
+
+.camera-badge {
+    margin-left: auto;
+    background: var(--xfit-black);
+    color: #fff;
+    font-size: 11px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    letter-spacing: 1px;
+}
+
+.live-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--xfit-red);
+    animation: pulse 1.6s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(224, 49, 49, .55);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(224, 49, 49, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(224, 49, 49, 0);
+    }
+}
+
+/* ===== Видео и скелет ===== */
+#container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    background: #0d0d0d;
+}
+
+video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transform: scaleX(-1);
+}
+
+canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    transform: scaleX(-1);
+}
+
+/* ===== Панель статистики ===== */
+.stats-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.stats-card {
+    background: var(--xfit-white);
+    border: 1px solid var(--xfit-border);
+    border-radius: var(--radius);
+    padding: 22px 24px;
+    box-shadow: var(--shadow-card);
+}
+
+.stats-label {
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1.6px;
+    color: var(--xfit-gray-light);
+    margin-bottom: 10px;
+}
+
+#status {
+    font-size: 18px;
+    font-weight: 700;
+    min-height: 26px;
+    line-height: 1.4;
+    color: var(--xfit-black);
+    transition: color .2s;
+}
+
+#status.good {
+    color: var(--xfit-green);
+}
+
+#status.bad {
+    color: var(--xfit-red);
+}
+
+.reps-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.reps-count {
+    font-family: 'Oswald', sans-serif;
+    font-size: 84px;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--xfit-black);
+}
+
+.reps-count span {
+    font-variant-numeric: tabular-nums;
+}
+
+.reps-progress {
+    margin-top: 16px;
+    height: 6px;
+    border-radius: 999px;
+    background: var(--xfit-border);
+    overflow: hidden;
+}
+
+.reps-progress .bar {
+    display: block;
+    height: 100%;
+    width: 65%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--xfit-green), #8fd33f);
+}
+
+/* ===== Кнопка тренировки ===== */
+#btn {
+    width: 100%;
+    padding: 18px 24px;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: #fff;
+    background: var(--xfit-green);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 10px 24px rgba(54, 182, 71, .3);
+    transition: all .2s;
+}
+
+#btn:hover {
+    background: var(--xfit-green-dark);
+    transform: translateY(-2px);
+}
+
+#btn:disabled {
+    background: var(--xfit-gray-light);
+    box-shadow: none;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.hint {
+    font-size: 13.5px;
+    color: var(--xfit-gray);
+    background: var(--xfit-green-light);
+    border-left: 4px solid var(--xfit-green);
+    padding: 14px 18px;
+    border-radius: 0 8px 8px 0;
+    margin: 2px 0 0;
+    line-height: 1.5;
+}
+
+/* ===== О проекте ===== */
+.about {
+    padding: 84px 0;
+    background: var(--xfit-white);
+}
+
+.about-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+    margin-top: 34px;
+}
+
+.about-card {
+    background: var(--xfit-bg);
+    border: 1px solid var(--xfit-border);
+    border-radius: var(--radius);
+    padding: 30px 28px;
+    transition: all .25s;
+}
+
+.about-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
+    border-color: transparent;
+    background: var(--xfit-white);
+}
+
+.about-num {
+    font-family: 'Oswald', sans-serif;
+    font-size: 40px;
+    font-weight: 700;
+    color: var(--xfit-green);
+    margin-bottom: 14px;
+}
+
+.about-card h3 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 22px;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    margin: 0 0 10px;
+}
+
+.about-card p {
+    color: var(--xfit-gray);
+    font-size: 15px;
+    margin: 0;
+}
+
+/* ===== Подвал ===== */
+.site-footer {
+    background: var(--xfit-black);
+    color: #cfcfcf;
+}
+
+.footer-inner {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr;
+    gap: 48px;
+    padding-top: 64px;
+    padding-bottom: 48px;
+}
+
+.logo-light .logo-xfit {
+    color: #fff;
+}
+
+.logo-light .logo-sub {
+    color: #9a9a9a;
+}
+
+.footer-brand p {
+    font-size: 14.5px;
+    color: #9a9a9a;
+    max-width: 420px;
+    margin: 18px 0 0;
+}
+
+.footer-col h4 {
+    font-size: 13px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1.6px;
+    color: var(--xfit-green);
+    margin: 0 0 16px;
+}
+
+.footer-col a {
+    display: block;
+    color: #cfcfcf;
+    text-decoration: none;
+    font-size: 14.5px;
+    padding: 5px 0;
+    transition: color .2s;
+}
+
+.footer-col a:hover {
+    color: #fff;
+}
+
+.footer-bottom {
+    border-top: 1px solid #2a2a2a;
+}
+
+.footer-bottom .container {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-size: 13.5px;
+    color: #777;
+}
+
+/* ===== Адаптивность ===== */
+@media (max-width: 920px) {
+    .workout-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .about-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .footer-inner {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+
+    .nav {
+        display: none;
+    }
+
+    .hero {
+        padding: 64px 0;
+    }
+
+    .topbar-item:last-child {
+        display: none;
+    }
+}

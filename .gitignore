@@ -1,0 +1,19 @@
+# Зависимости
+node_modules/
+
+# Системные файлы macOS
+.DS_Store
+
+# Логи и временные файлы
+*.log
+npm-debug.log*
+
+# Файлы редакторов
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Сборка
+dist/
+build/
