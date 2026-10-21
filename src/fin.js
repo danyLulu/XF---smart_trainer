@@ -61,6 +61,12 @@ async function initPose() {
 async function predictWebcam() {
     if (!webcamRunning) return;
 
+    // Если видео ещё не загрузило кадры, ждём следующего тика
+    if (video.videoWidth === 0 || video.videoHeight === 0) {
+        window.requestAnimationFrame(predictWebcam);
+        return;
+    }
+
     canvasElement.width = video.videoWidth;
     canvasElement.height = video.videoHeight;
 
@@ -71,6 +77,9 @@ async function predictWebcam() {
         poseLandmarker.detectForVideo(video, startTimeMs, (result) => {
             canvasCtx.save();
             canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
+
+            // Рисуем сам кадр с камеры, чтобы изображение было видно
+            canvasCtx.drawImage(video, 0, 0, canvasElement.width, canvasElement.height);
 
             if (result.landmarks && result.landmarks.length > 0) {
                 const landmarks = result.landmarks[0];
@@ -148,6 +157,80 @@ async function predictWebcam() {
     }
 }
 
+// Останавливаем камеру и освобождаем её для других приложений
+function stopCamera() {
+    if (video.srcObject) {
+        const tracks = video.srcObject.getTracks();
+        tracks.forEach(track => track.stop());
+        video.srcObject = null;
+    }
+}
+
+// Проверяем, есть ли в системе вообще какие-либо камеры
+async function hasAnyCamera() {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.enumerateDevices) return true;
+    try {
+        const devices = await navigator.mediaDevices.enumerateDevices();
+        return devices.some(device => device.kind === "videoinput");
+    } catch {
+        return true; // не смогли проверить — не мешаем
+    }
+}
+
+// Подключаем полученный видеопоток к <video> и запускаем анализ
+async function useStream(stream) {
+    video.srcObject = stream;
+    // Явно запускаем воспроизведение — без этого видео может остаться чёрным
+    await video.play();
+    predictWebcam();
+}
+
+// Запуск камеры с запасным вариантом запроса
+async function startCamera() {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        throw new Error("Браузер не поддерживает доступ к камере. Откройте страницу по адресу http://localhost:8080");
+    }
+
+    // 1) Пробуем фронтальную камеру с нужным разрешением
+    try {
+        const constraints = { video: { width: 640, height: 480, facingMode: "user" } };
+        const stream = await navigator.mediaDevices.getUserMedia(constraints);
+        await useStream(stream);
+        return;
+    } catch (firstErr) {
+        console.warn("Не удалось открыть камеру с жёсткими ограничениями:", firstErr);
+    }
+
+    // 2) Запасной вариант: любая камера без ограничений
+    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+    await useStream(stream);
+}
+
+// Понятное сообщение для каждой ошибки доступа к камере
+async function showCameraError(err) {
+    console.error(err);
+    const name = err.name || "";
+    const message = err.message || "";
+
+    if (name === "NotFoundError" || /not found/i.test(message)) {
+        // Уточняем, видит ли браузер камеры вообще
+        const anyCamera = await hasAnyCamera();
+        if (anyCamera) {
+            statusDiv.textContent = "Камера не найдена: она выключена или занята другим приложением (Zoom, FaceTime и т.п.)";
+        } else {
+            statusDiv.textContent = "Браузер не видит ни одной камеры. Проверьте: macOS → Системные настройки → Конфиденциальность и безопасность → Камера — разрешите доступ браузеру.";
+        }
+    } else if (name === "NotAllowedError" || name === "PermissionDeniedError") {
+        statusDiv.textContent = "Доступ к камере запрещён. Нажмите на иконку камеры в адресной строке и разрешите доступ.";
+    } else if (name === "NotReadableError") {
+        statusDiv.textContent = "Не удалось открыть камеру — она уже используется другим приложением. Закройте его и попробуйте снова.";
+    } else if (name === "SecurityError") {
+        statusDiv.textContent = "Доступ к камере работает только по HTTPS или localhost. Откройте http://localhost:8080";
+    } else {
+        statusDiv.textContent = "Ошибка доступа к камере: " + message;
+    }
+}
+
 // Запуск камеры
 async function enableCam() {
     if (!poseLandmarker) {
@@ -159,21 +242,23 @@ async function enableCam() {
         webcamRunning = false;
         btn.textContent = "▶ Начать тренировку";
         statusDiv.textContent = "Тренировка остановлена";
-    } else {
-        webcamRunning = true;
-        btn.textContent = "⏸ Остановить";
+        stopCamera();
+        return;
+    }
 
-        // ВАЖНО: Запускаем распознавание речи здесь, внутри клика пользователя!
-        // Это обходит ограничения браузера на автозапуск звука
-        speak("Тренировка началась. Приседайте.", true);
+    webcamRunning = true;
+    btn.textContent = "⏸ Остановить";
 
-        const constraints = { video: { width: 640, height: 480, facingMode: "user" } };
-        navigator.mediaDevices.getUserMedia(constraints).then((stream) => {
-            video.srcObject = stream;
-            video.addEventListener("loadeddata", predictWebcam);
-        }).catch(err => {
-            statusDiv.textContent = "Ошибка доступа к камере: " + err.message;
-        });
+    // ВАЖНО: Запускаем распознавание речи здесь, внутри клика пользователя!
+    // Это обходит ограничения браузера на автозапуск звука
+    speak("Тренировка началась. Приседайте.", true);
+
+    try {
+        await startCamera();
+    } catch (err) {
+        webcamRunning = false;
+        btn.textContent = "▶ Начать тренировку";
+        await showCameraError(err);
     }
 }
 
