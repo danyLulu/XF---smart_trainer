@@ -3,67 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XF Smart Trainer — Личный тренер</title>
+    <title>Smart Trainer — умный тренажер</title>
+    <!-- шрифты с гугла -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="stile.css">
 </head>
 <body>
 
-    <!-- Верхняя информационная полоса -->
+    <!-- верхняя полоска -->
     <div class="topbar">
         <div class="container topbar-inner">
-            <span class="topbar-item">Школьный проект · 10 класс</span>
-            <span class="topbar-item">Анализ спортивных упражнений с помощью ИИ</span>
+            <span>Школьный проект · 10 класс</span>
+            <span>Анализ упражнений с помощью ИИ</span>
         </div>
     </div>
 
-    <!-- Шапка в стиле XFIT -->
+    <!-- шапка -->
     <header class="site-header">
         <div class="container header-inner">
             <a class="logo" href="#">
                 <span class="logo-xfit">XFIT</span>
                 <span class="logo-dot"></span>
-                <span class="logo-sub">Smart&nbsp;Trainer</span>
+                <span class="logo-sub">Smart Trainer</span>
             </a>
             <nav class="nav">
-                <a class="nav-link active" href="#workout">Тренировка</a>
-                <a class="nav-link" href="#features">Возможности</a>
+                <a class="nav-link" href="#workout">Тренировка</a>
                 <a class="nav-link" href="#about">О проекте</a>
             </nav>
         </div>
     </header>
 
     <main>
-        <!-- Hero-блок -->
+        <!-- блок с описанием -->
         <section class="hero">
             <div class="container">
-                <div class="hero-tag">Бизнес и премиум фитнес</div>
-                <h1 class="hero-title">Личный тренер<br><span>по приседаниям</span></h1>
+                <div class="hero-tag">Фитнес и технологии</div>
+                <h1 class="hero-title">Личный тренер<br><span>по вашим тренировкам</span></h1>
                 <p class="hero-sub">
-                    Искусственный интеллект следит за техникой выполнения упражнения, считает повторения
-                    и подсказывает голосом, когда нужно присесть ниже. Занимайтесь правильно — как с персональным тренером.
+                    Искусственный интеллект смотрит через камеру как вы тренируетесь:
+                    приседания, отжимания, берпи, лодочка и упражнения со штангой и гантелями.
+                    Программа считает повторения и подсказывает голосом как делать правильно.
                 </p>
-                <ul class="hero-features" id="features">
-                    <li>Подсчёт повторений в реальном времени</li>
-                    <li>Голосовые подсказки тренера</li>
-                    <li>Контроль глубины приседа</li>
+                <ul class="hero-features">
+                    <li>Считает повторения сам</li>
+                    <li>5 разных упражнений</li>
+                    <li>Говорит голосом</li>
+                    <li>Следит за техникой</li>
                 </ul>
-                <a class="btn btn-primary hero-btn" href="#workout">Начать тренировку</a>
+                <a class="btn" href="#workout">Начать тренировку</a>
             </div>
         </section>
 
-        <!-- Тренировка -->
+        <!-- тут сама тренировка -->
         <section class="workout" id="workout">
             <div class="container">
-                <div class="section-head">
-                    <h2 class="section-title">Начнём тренировку</h2>
-                    <p class="section-sub">Включите камеру, встаньте на расстоянии 2–3 метров и выполняйте приседания</p>
+                <h2 class="section-title">Начнём тренировку</h2>
+                <p class="section-sub" id="section-sub">Включите камеру, отойдите на 2-3 метра и делайте приседания</p>
+
+                <!-- выбор упражнения -->
+                <div class="exercise-selector">
+                    <button class="exercise-btn active" data-exercise="squat">🦵 Приседания</button>
+                    <button class="exercise-btn" data-exercise="pushup">💪 Отжимания</button>
+                    <button class="exercise-btn" data-exercise="burpee">🔥 Берпи</button>
+                    <button class="exercise-btn" data-exercise="superman">⛵ Лодочка</button>
+                    <button class="exercise-btn" data-exercise="curl">🏋️ Штанга и гантели</button>
                 </div>
 
                 <div class="workout-grid">
-                    <!-- Карточка с камерой -->
+                    <!-- камера -->
                     <div class="camera-card">
                         <div class="camera-card-header">
                             <span class="live-dot"></span>
@@ -76,69 +85,65 @@
                         </div>
                     </div>
 
-                    <!-- Панель статистики -->
+                    <!-- статистика справа -->
                     <aside class="stats-panel">
-                        <div class="stats-card status-card">
+                        <div class="stats-card">
                             <div class="stats-label">Статус</div>
-                            <div id="status">Нажмите кнопку, чтобы начать</div>
+                            <div id="status">Нажмите кнопку чтобы начать</div>
                         </div>
 
-                        <div class="stats-card reps-card">
-                            <div class="stats-label">Повторений</div>
+                        <div class="stats-card">
+                            <div class="stats-label" id="reps-label">Повторений</div>
                             <div class="reps-count"><span id="reps">0</span></div>
-                            <div class="reps-progress"><span class="bar"></span></div>
                         </div>
 
-                        <button id="btn">▶ Начать тренировку</button>
+                        <button id="btn" disabled>▶ Начать тренировку</button>
 
-                        <p class="hint">Совет: держите спину ровно, а колени — не дальше носков.</p>
+                        <p class="hint" id="hint">Совет: держите спину ровно, колени не должны уходить за носки.</p>
                     </aside>
                 </div>
             </div>
         </section>
 
-        <!-- О проекте -->
+        <!-- как это работает -->
         <section class="about" id="about">
             <div class="container">
-                <div class="section-head">
-                    <h2 class="section-title">Как это работает</h2>
-                </div>
+                <h2 class="section-title">Как это работает</h2>
                 <div class="about-grid">
                     <div class="about-card">
                         <div class="about-num">01</div>
-                        <h3>Модель MediaPipe Pose</h3>
-                        <p>Нейросеть определяет 33 точки тела прямо в браузере — без установки приложений и отправки видео на сервер.</p>
+                        <h3>Нейросеть MediaPipe</h3>
+                        <p>Модель находит 33 точки на теле человека прямо в браузере. Видео никуда не отправляется.</p>
                     </div>
                     <div class="about-card">
                         <div class="about-num">02</div>
-                        <h3>Анализ углов</h3>
-                        <p>По углу сгиба колена система мгновенно оценивает глубину и правильность приседа.</p>
+                        <h3>Углы</h3>
+                        <p>Программа считает углы в коленях и локтях, высоту бедра и положение тела — по ним она понимает каждое упражнение.</p>
                     </div>
                     <div class="about-card">
                         <div class="about-num">03</div>
-                        <h3>Обратная связь</h3>
-                        <p>Голосовые и текстовые подсказки помогают исправить технику прямо во время упражнения.</p>
+                        <h3>Подсказки</h3>
+                        <p>Если присел слишком высоко, тренер скажет об этом голосом.</p>
                     </div>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- Подвал -->
+    <!-- низ сайта -->
     <footer class="site-footer">
         <div class="container footer-inner">
             <div class="footer-brand">
                 <div class="logo logo-light">
                     <span class="logo-xfit">XFIT</span>
                     <span class="logo-dot"></span>
-                    <span class="logo-sub">Smart&nbsp;Trainer</span>
+                    <span class="logo-sub">Smart Trainer</span>
                 </div>
-                <p>Школьный проект ученика 10 класса. Сервис для анализа техники выполнения приседаний с помощью искусственного интеллекта.</p>
+                <p>Школьный проект ученика 10 класса. Программа для анализа техники упражнений с помощью ИИ.</p>
             </div>
             <div class="footer-col">
                 <h4>Разделы</h4>
                 <a href="#workout">Тренировка</a>
-                <a href="#features">Возможности</a>
                 <a href="#about">О проекте</a>
             </div>
             <div class="footer-col">
@@ -152,7 +157,7 @@
         </div>
     </footer>
 
-    <!-- Подключаем MediaPipe Pose -->
+    <!-- главный скрипт программы -->
     <script type="module" src="fin.js"></script>
 </body>
 </html>
